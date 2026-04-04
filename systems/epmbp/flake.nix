@@ -83,6 +83,7 @@
                 # packsUnstable.git-credential-manager
                 packsUnstable.kubectl
                 packsUnstable.kubernetes-helm
+                packsUnstable.helmfile
                 packsUnstable.devspace
                 packsUnstable.hurl
                 packsUnstable.gh
@@ -98,6 +99,19 @@
                     bold_font        auto
                     italic_font      auto
                     bold_italic_font auto
+                  '';
+                };
+                kuberc = {
+                  target = ".kube/kuberc";
+                  force = true;
+                  text = ''
+                    apiVersion: kubectl.config.k8s.io/v1beta1
+                    kind: Preference
+                    overrides:
+                      - command: apply
+                        options:
+                          - name: server-side
+                            default: "true"
                   '';
                 };
               };
