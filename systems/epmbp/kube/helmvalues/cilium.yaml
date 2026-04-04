@@ -1,0 +1,53 @@
+autoDirectNodeRoutes: true
+bandwidthManager:
+  enabled: true
+bpf:
+  masquerade: true
+envoy:
+  enabled: true
+cluster:
+  name: epmbp
+  id: 1
+endpointRoutes:
+  enabled: true
+hubble:
+  enabled: true
+  metrics:
+    enabled:
+      - dns:query
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+    ingress:
+      enabled: false
+ipam:
+  mode: kubernetes
+ipv4NativeRoutingCIDR: "10.42.0.0/16"
+k8sServiceHost: "192.168.64.2" # colima default
+k8sServicePort: 6443
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+l2announcements:
+  enabled: true
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+localRedirectPolicy: true
+operator:
+  replicas: 1
+  rollOutPods: true
+rollOutCiliumPods: true
+securityContext:
+  privileged: true
+routingMode: native
+gatewayAPI:
+  enabled: false

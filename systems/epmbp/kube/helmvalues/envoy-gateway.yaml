@@ -1,0 +1,10 @@
+global:
+  imageRegistry: mirror.gcr.io
+config:
+  envoyGateway:
+    provider:
+      type: Kubernetes
+      kubernetes:
+        deploy:
+          # https://gateway.envoyproxy.io/docs/api/extension_types/#kubernetesdeploymodetype
+          type: GatewayNamespace

@@ -1,0 +1,68 @@
+repositories:
+  - name: cilium
+    url: https://helm.cilium.io
+  - name: coredns
+    url: https://coredns.github.io/helm
+  - name: metrics-server
+    url: https://kubernetes-sigs.github.io/metrics-server
+  - name: clickhouse
+    url: https://helm.altinity.com
+  - name: opentelemetry-operator
+    url: https://open-telemetry.github.io/opentelemetry-helm-charts
+
+releases:
+  - name: cilium
+    namespace: cilium-system
+    chart: cilium/cilium
+    version: "1.19.2"
+    values:
+      - ./helmvalues/cilium.yaml
+
+  - name: coredns
+    namespace: kube-system
+    chart: coredns/coredns
+    version: "1.45.2"
+    values:
+      - ./helmvalues/coredns.yaml
+
+  - name: metrics-server
+    namespace: kube-system
+    chart: metrics-server/metrics-server
+    version: "3.13.0"
+    values:
+      - ./helmvalues/metrics-server.yaml
+
+  - name: local-path-provisioner
+    namespace: local-path-storage
+    chart: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
+    version: "0.0.35"
+    values:
+      - ./helmvalues/local-path-provisioner.yaml
+
+  - name: envoy-gateway
+    namespace: envoy-gateway
+    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
+    version: "v1.7.1"
+    values:
+      - ./helmvalues/envoy-gateway.yaml
+
+  - name: clickhouse
+    namespace: clickhouse-operator
+    chart: clickhouse/altinity-clickhouse-operator
+    version: "0.26.2"
+    values:
+      - ./helmvalues/clickhouse-operator.yaml
+
+  - name: opentelemetry-operator
+    namespace: opentelemetry-operator
+    chart: opentelemetry-operator/opentelemetry-operator
+    version: "0.109.0"
+    values:
+      - ./helmvalues/opentelemetry-operator.yaml
+
+  - name: grafana-operator
+    namespace: grafana-operator
+    chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
+    version: "5.22.2"
+    values:
+      - ./helmvalues/grafana-operator.yaml

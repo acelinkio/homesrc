@@ -1,0 +1,10 @@
+# noop the schema autodetection
+# yaml-language-server: $schema=https://json-schema.org/draft/2020-12/schema
+manager:
+  collectorImage:
+    repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
+admissionWebhooks:
+  certManager:
+    enabled: false
+  autoGenerateCert:
+    enabled: true
