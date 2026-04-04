@@ -125,15 +125,13 @@
                     isService = true;
                     settings = {
                       cpu = 4;
-                      disk = 100;
                       memory = 8;
-                      arch = "host";
+                      disk = 80;
                       runtime = "containerd";
-                      hostname = null;
                       kubernetes = {
                         enabled = true;
                         version = "v1.35.3+k3s1";
-                        k3sArgs = [ 
+                        k3sArgs = [
                           "--disable=coredns,flannel,local-storage,metrics-server,servicelb,traefik"
                           "--flannel-backend='none'"
                           "--disable-network-policy"
@@ -143,35 +141,10 @@
                         ];
                         port = 6443;
                       };
-                      autoActivate = true;
                       network = {
                         address = true;
                         mode = "shared";
-                        interface = "en0";
-                        preferredRoute = false;
-                        dns = [ ];
-                        dnsHosts = {
-                          "host.docker.internal" = "host.lima.internal";
-                        };
-                        hostAddresses = false;
                       };
-                      forwardAgent = false;
-                      docker = { };
-                      vmType = "qemu";
-                      portForwarder = "ssh";
-                      rosetta = false;
-                      binfmt = true;
-                      nestedVirtualization = false;
-                      mountType = "sshfs";
-                      mountInotify = false;
-                      cpuType = "host";
-                      provision = [ ];
-                      sshConfig = true;
-                      sshPort = 0;
-                      mounts = [ ];
-                      diskImage = "";
-                      rootDisk = 20;
-                      env = { };
                     };
                   };
                 };
