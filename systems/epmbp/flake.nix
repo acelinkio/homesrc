@@ -107,7 +107,7 @@
                   text = ''
                     apiVersion: kubectl.config.k8s.io/v1beta1
                     kind: Preference
-                    overrides:
+                    defaults:
                       - command: apply
                         options:
                           - name: server-side
