@@ -1,0 +1,42 @@
+{
+  "_profile": "mac_work_basic",
+  "git.autofetch": true,
+  "git.autofetchPeriod": 60,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "gitlens.codeLens.enabled": false,
+  "editor.accessibilitySupport": "off",
+  "editor.fontFamily": "MonaspiceKr Nerd Font Mono",
+  "editor.fontLigatures": "'calt', 'liga', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09'",
+  "editor.stickyScroll.enabled": false,
+  "editor.tabSize": 2,
+  "indentRainbow.colors": [
+    "rgba(0,0,255,0.3)",
+    "rgba(255,255,0,0.3)",
+    "rgba(128,0,128,0.3)",
+    "rgba(255,165,0,0.3)"
+  ],
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 4,
+  "terminal.integrated.fontFamily": "Monaspace Krypton NF",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.iconTheme": "vscode-icons",
+  "_extra": "",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.serverSettings": {
+    "nil": {
+      "formatting": { "command": ["nixfmt"]}
+    }
+  },
+  "redhat.telemetry.enabled": false,
+  "vs-kubernetes": {
+    "disable-linters": [
+      "resource-limits"
+    ],
+    "vs-kubernetes.crd-code-completion": "disabled",
+    "vs-kubernetes.ignore-recommendations": true
+  },
+  "terminal.integrated.enablePersistentSessions": false
+}
