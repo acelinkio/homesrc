@@ -1,0 +1,19 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: certificate
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allowfromns-gateway
+  namespace: certificate
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      namespace: gateway
+  to:
+    - group: ""
+      kind: Secret
