@@ -48,10 +48,41 @@
           environment.pathsToLink = [ "/share/zsh" ];
           environment.shells = [ packs.zsh ];
           system.configurationRevision = self.rev or self.dirtyRev or null;
+          system.primaryUser = username;
           system.stateVersion = 6;
           nixpkgs.hostPlatform = "aarch64-darwin";
           # https://github.com/nix-community/home-manager/issues/4026
           users.users.${username}.home = "/Users/${username}";
+          # homebrew - requires homebrew to be installed independently
+          # https://brew.sh
+          homebrew = {
+            enable = true;
+            onActivation = {
+              autoUpdate = true;
+              upgrade = true;
+              # "zap" removes formulae/casks not listed below
+              # "uninstall" removes but keeps deps; "none" to skip
+              cleanup = "zap";
+            };
+            # git-credential-manager install is done manually via brew
+            # however installation fails because the git config is managed
+            # via this flake/nix
+            # cli
+            brews = [
+            ];
+            # gui
+            casks = [
+              "1password"
+              "claude-code"
+              "discord"
+              "firefox"
+              "font-monaspice-nerd-font"
+              "freelens"
+              "kitty"
+              "steam"
+              "visual-studio-code"
+            ];
+          };
           }
         )
         # home-manager
