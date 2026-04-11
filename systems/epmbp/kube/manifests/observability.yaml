@@ -76,3 +76,63 @@ spec:
           resources:
             requests:
               storage: 1Gi
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel
+  namespace: observability
+spec:
+  mode: daemonset
+  env:
+    - name: CLICKHOUSE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: clickhouse-passwords
+          key: collector
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+    processors:
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 75
+        spike_limit_percentage: 15
+    exporters:
+      debug:
+        verbosity: detailed
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/clickhouseexporter/README.md#example-config
+      clickhouse:
+        endpoint: tcp://clickhouse-clickhouse.observability.svc.cluster.local:9000?dial_timeout=10s&compress=lz4&async_insert=1
+        username: collector
+        password: ${env:CLICKHOUSE_PASSWORD}
+        ttl: 72h # 3 days
+        create_schema: true
+        timeout: 5s
+        database: otel
+        sending_queue:
+          queue_size: 1000
+        retry_on_failure:
+          enabled: true
+          initial_interval: 5s
+          max_interval: 30s
+          max_elapsed_time: 300s
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter]
+          exporters: [clickhouse]
+        metrics:
+          receivers: [otlp]
+          processors: [memory_limiter]
+          exporters: [clickhouse]
+        logs:
+          receivers: [otlp]
+          processors: [memory_limiter]
+          exporters: [clickhouse]

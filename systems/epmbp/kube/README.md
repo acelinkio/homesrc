@@ -24,6 +24,8 @@ helmfile template --include-crds | kubectl apply -f -
 ## bring your own cert, not adding secretsmanager/certmanager
 kubectl create namespace certificate
 kubectl create secret tls wildcarddev --cert=tls.crt --key=tls.key -n certificate
+## create random passwords for accessing clickhouse
+kubectl create namespace observability
 kubectl create secret generic clickhouse-passwords --from-literal=collector=$(uuidgen) --from-literal=grafana=$(uuidgen) -n observability
 ## bring grafana admin credentials
 kubectl create secret generic grafana-admin-credentials --from-file=GF_SECURITY_ADMIN_USER=grafana_admin.secret --from-file=GF_SECURITY_ADMIN_PASSWORD=grafana_password.secret -n observability
