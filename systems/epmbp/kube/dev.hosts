@@ -2,4 +2,4 @@
 # apply with: hostctl add dev --from dev.hosts
 # list with:  hostctl list dev
 # toggle:     hostctl enable dev | hostctl disable dev
-192.168.64.200 grafana.dev.bitey.life
+192.168.64.200 grafana.dev.bitey.life mcp-k8s.dev.bitey.life
