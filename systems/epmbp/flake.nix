@@ -109,7 +109,7 @@
                 packs.kubectx # kubectx kubens
                 packs.k9s
                 packs.jqp
-                packs.cilium-cli
+                packs.hostctl
                 # this install is not functional
                 # packsUnstable.git-credential-manager
                 packsUnstable.kubectl
