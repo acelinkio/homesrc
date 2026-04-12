@@ -186,3 +186,65 @@ spec:
                 claimName: grafana-pvc
       strategy:
         type: Recreate
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana
+  namespace: observability
+spec:
+  parentRefs:
+    - name: internal
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - "grafana.dev.bitey.life"
+  rules:
+    - backendRefs:
+        - name: grafana-service
+          port: 3000
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: clickhouse
+  namespace: observability
+spec:
+  valuesFrom:
+  - targetPath: "secureJsonData.password"
+    valueFrom:
+      secretKeyRef:
+        name: clickhouse-passwords
+        key: grafana
+  datasource:
+    name: clickhouse
+    access: proxy
+    isDefault: true
+    type: grafana-clickhouse-datasource
+    jsonData:
+      host: clickhouse-clickhouse.observability.svc.cluster.local
+      port: 9000
+      username: grafana
+      defaultDatabase: otel
+      protocol: native
+      logs:
+        defaultDatabase: otel
+        defaultTable: otel_logs
+        selectContextColumns: true
+        contextColumns:
+          - ServiceName
+        otelEnabled: true
+        otelVersion: latest
+      traces:
+        defaultDatabase: otel
+        defaultTable: otel_traces
+        otelEnabled: true
+        otelVersion: latest
+    secureJsonData:
+      password: ${grafana}
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  plugins:
+    - name: grafana-clickhouse-datasource
+      version: 4.14.0
