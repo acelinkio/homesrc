@@ -66,3 +66,10 @@ releases:
     version: "5.22.2"
     values:
       - ./helmvalues/grafana-operator.yaml
+
+  - name: cnpg-system
+    namespace: cnpg-system
+    chart: oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg
+    version: "0.28.0"
+    values:
+      - ./helmvalues/cnpg-system.yaml

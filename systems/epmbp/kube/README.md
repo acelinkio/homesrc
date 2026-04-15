@@ -18,6 +18,8 @@ kubectl create namespace grafana-operator
 kubectl create namespace opentelemetry-operator
 kubectl create namespace local-path-storage
 kubectl create namespace envoy-gateway
+kubectl create namespace cnpg-system
+
 # apply helm charts
 helmfile template --include-crds | kubectl apply -f -
 # hacks
