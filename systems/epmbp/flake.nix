@@ -79,6 +79,7 @@
               "font-monaspice-nerd-font"
               "freelens"
               "kitty"
+              "pgadmin4d"
               "steam"
               "visual-studio-code"
             ];
