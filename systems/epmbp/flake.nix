@@ -67,8 +67,13 @@
             # git-credential-manager install is done manually via brew
             # however installation fails because the git config is managed
             # via this flake/nix
+            taps = [
+              "hcavarsan/kftray"
+            ];
             # cli
             brews = [
+              # no naitve nix package
+              "hcavarsan/kftray/kftui"
             ];
             # gui
             casks = [
@@ -79,7 +84,7 @@
               "font-monaspice-nerd-font"
               "freelens"
               "kitty"
-              "pgadmin4d"
+              "pgadmin4"
               "steam"
               "visual-studio-code"
             ];
