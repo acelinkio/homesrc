@@ -12,17 +12,10 @@ metadata:
 spec:
   instances: 2
   imageName: ghcr.io/cloudnative-pg/postgresql:17.5
-  # creates a database/role by default
-  # convention over configuration paradigm
-  # https://cloudnative-pg.io/docs/1.29/bootstrap#bootstrap-an-empty-cluster-initdb
   bootstrap:
-    # initdb is default, other options include recovery/backup
     initdb:
       database: app1
       owner: app1
-      # run sql queries
-      # https://cloudnative-pg.io/docs/1.29/bootstrap#executing-queries-after-initialization
-      # runs as application owner
       postInitTemplateSQL:
         - DROP SCHEMA public;
       postInitApplicationSQL:
@@ -46,32 +39,3 @@ spec:
                 kftray.app/configs: "postgresql-5432-5432"
             spec:
               type: ClusterIP
-# ---
-# apiVersion: postgresql.cnpg.io/v1
-# kind: Database
-# metadata:
-#   name: postgresql-app2
-#   namespace: sandbox
-# spec:
-#   databaseReclaimPolicy: retain # retain or delete
-#   ensure: present # present or absent
-#   name: app2
-#   # expects this role to be created manually
-#   # need to also see if i can have 
-#   owner: app1
-#   schemas:
-#     - name: data
-#       owner: app1
-#   cluster:
-#     name: postgresql
-
-# CLUSTER CR
-# use predefined user credentials
-# decide on using templates to drop public schema (may want app per cluster), rely upon postInitApplicationSQL to configure search_path & creating schema (imparative)
-
-# DATABASE CR
-# also need to come to terms with the default application database that is created
-# figure out how to manage search_path when using Database cr
-# does not change search path
-
-# need to move to using my predefined credentials for app1
