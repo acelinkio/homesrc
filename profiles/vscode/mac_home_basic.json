@@ -1,5 +1,5 @@
 {
-  "_profile": "mac_work_basic",
+  "_profile": "mac_home_basic",
   "git.autofetch": true,
   "git.autofetchPeriod": 60,
   "git.confirmSync": false,
@@ -38,5 +38,13 @@
     "vs-kubernetes.crd-code-completion": "disabled",
     "vs-kubernetes.ignore-recommendations": true
   },
-  "terminal.integrated.enablePersistentSessions": false
+  "terminal.integrated.enablePersistentSessions": true,
+  "claudeCode.preferredLocation": "panel",
+  "remote.autoForwardPorts": false,
+  "remote.defaultExtensionsIfInstalledLocally": [
+    "GitHub.vscode-pull-request-github",
+    "oderwat.indent-rainbow",
+    "vscode-icons-team.vscode-icons",
+    "anthropic.claude-code"
+  ]
 }
