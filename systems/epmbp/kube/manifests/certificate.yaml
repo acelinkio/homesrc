@@ -16,6 +16,8 @@ spec:
     kind: ClusterSecretStore
   target:
     name: wildcarddev
+    template:
+      type: kubernetes.io/tls
   data:
     - secretKey: tls.crt
       remoteRef:
