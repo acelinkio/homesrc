@@ -1,0 +1,61 @@
+---
+# kubectl create secret generic postgresql-app1-credentials --from-literal=username=admin --from-literal=password=superawesomepassword -n secretstore
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: postgresql-app1-credentials
+  namespace: sandbox
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: secretstore
+    kind: ClusterSecretStore
+  target:
+    name: postgresql-app1-credentials
+  data:
+    - secretKey: username
+      remoteRef:
+        key: postgresql-app1-credentials
+        property: username
+    - secretKey: password
+      remoteRef:
+        key: postgresql-app1-credentials
+        property: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql
+  namespace: sandbox
+spec:
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5
+  bootstrap:
+    initdb:
+      database: app1
+      owner: app1
+      secret:
+        name: postgresql-app1-credentials
+      postInitTemplateSQL:
+        - DROP SCHEMA public;
+      postInitApplicationSQL:
+        - CREATE SCHEMA IF NOT EXISTS data AUTHORIZATION app1;
+        - ALTER DATABASE app1 SET search_path TO "$user", data;
+  storage:
+    size: 5Gi
+  resources:
+    requests:
+      memory: 10Mi
+      cpu: 10m
+  managed:
+    services:
+      additional:
+        - selectorType: rw
+          serviceTemplate:
+            metadata:
+              name: postgresql-kftray
+              annotations:
+                kftray.app/enabled: "true"
+                kftray.app/configs: "postgresql-5432-5432"
+            spec:
+              type: ClusterIP
