@@ -32,6 +32,13 @@ releases:
     values:
       - ./helmvalues/metrics-server.yaml
 
+  - name: external-secrets
+    namespace: external-secrets
+    chart: oci://ghcr.io/external-secrets/charts/external-secrets
+    version: "2.3.0"
+    values:
+      - ./helmvalues/external-secrets.yaml
+
   - name: local-path-provisioner
     namespace: local-path-storage
     chart: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
