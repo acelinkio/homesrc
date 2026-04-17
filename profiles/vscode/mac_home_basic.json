@@ -42,7 +42,6 @@
   "claudeCode.preferredLocation": "panel",
   "remote.autoForwardPorts": false,
   "remote.defaultExtensionsIfInstalledLocally": [
-    "GitHub.vscode-pull-request-github",
     "oderwat.indent-rainbow",
     "vscode-icons-team.vscode-icons",
     "anthropic.claude-code"
