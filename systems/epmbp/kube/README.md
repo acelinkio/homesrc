@@ -11,34 +11,35 @@ if moving into another cluster, just swap out the clustoresecretstore!
 kubectl --context tp2 get secret wildcarddotdev-production -n certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > tls.crt
 kubectl --context tp2 get secret wildcarddotdev-production -n certificate -o jsonpath='{.data.tls\.key}' | base64 -d > tls.key
 # grafana admin credentials
-kubectl create namespace observability
 kubectl --context tp2 get secret grafana-admin-credentials -n observability -o jsonpath='{.data.GF_SECURITY_ADMIN_PASSWORD}' | base64 -d > grafana_password.secret
 kubectl --context tp2 get secret grafana-admin-credentials -n observability -o jsonpath='{.data.GF_SECURITY_ADMIN_USER}' | base64 -d > grafana_admin.secret
 ```
 
+# importing these imperative secrets
+```sh
+kubectl create namespace secretstore
+kubectl create secret tls wildcarddev --cert=tls.crt --key=tls.key -n secretstore
+# may consider adding external-secrets generator instead
+kubectl create secret generic clickhouse-passwords --from-literal=collector=$(uuidgen) --from-literal=grafana=$(uuidgen) -n secretstore
+kubectl create secret generic grafana-admin-credentials --from-file=GF_SECURITY_ADMIN_USER=grafana_admin.secret --from-file=GF_SECURITY_ADMIN_PASSWORD=grafana_password.secret -n secretstore
+```
+
 # finsihing kube setup
 ```sh
-kubectl create namespace cilium-system
-kubectl create namespace clickhouse-operator
-kubectl create namespace external-secrets
-kubectl create namespace grafana-operator
-kubectl create namespace opentelemetry-operator
-kubectl create namespace local-path-storage
-kubectl create namespace envoy-gateway
-kubectl create namespace cnpg-system
+# create the namespaces in helmfile beforehand
+# note this requires the golang version of yq
+helmfile template | \
+  yq ea '.metadata.namespace // ""' - | sort -u | grep -v '^---' | grep -v '^$' | \
+  while read ns; do
+    echo "---"
+    echo "apiVersion: v1"
+    echo "kind: Namespace"
+    echo "metadata:"
+    echo "  name: $ns"
+  done | kubectl apply -f -
 
 # apply helm charts
 helmfile template --include-crds | kubectl apply -f -
-# hacks
-## bring your own cert, not adding secretsmanager/certmanager
-kubectl create namespace certificate
-kubectl create secret tls wildcarddev --cert=tls.crt --key=tls.key -n certificate
-## create random passwords for accessing clickhouse
-kubectl create namespace observability
-kubectl create secret generic clickhouse-passwords --from-literal=collector=$(uuidgen) --from-literal=grafana=$(uuidgen) -n observability
-## bring grafana admin credentials
-kubectl create secret generic grafana-admin-credentials --from-file=GF_SECURITY_ADMIN_USER=grafana_admin.secret --from-file=GF_SECURITY_ADMIN_PASSWORD=grafana_password.secret -n observability
-
 # apply manifests
 kubectl apply -f manifests/
 ```
