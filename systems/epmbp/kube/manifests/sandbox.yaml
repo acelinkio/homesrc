@@ -4,6 +4,29 @@ apiVersion: v1
 metadata:
   name: sandbox
 ---
+# kubectl create secret generic postgresql-app1-credentials --from-literal=username=admin --from-literal=password=superawesomepassword -n secretstore
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: postgresql-app1-credentials
+  namespace: sandbox
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: secretstore
+    kind: ClusterSecretStore
+  target:
+    name: postgresql-app1-credentials
+  data:
+    - secretKey: username
+      remoteRef:
+        key: postgresql-app1-credentials
+        property: username
+    - secretKey: password
+      remoteRef:
+        key: postgresql-app1-credentials
+        property: password
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -16,6 +39,8 @@ spec:
     initdb:
       database: app1
       owner: app1
+      secret:
+        name: postgresql-app1-credentials
       postInitTemplateSQL:
         - DROP SCHEMA public;
       postInitApplicationSQL:
