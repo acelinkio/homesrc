@@ -4,6 +4,28 @@ apiVersion: v1
 metadata:
   name: certificate
 ---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: wildcarddev
+  namespace: certificate
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: secretstore
+    kind: ClusterSecretStore
+  target:
+    name: wildcarddev
+  data:
+    - secretKey: tls.crt
+      remoteRef:
+        key: wildcarddev
+        property: tls.crt
+    - secretKey: tls.key
+      remoteRef:
+        key: wildcarddev
+        property: tls.key
+---
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
