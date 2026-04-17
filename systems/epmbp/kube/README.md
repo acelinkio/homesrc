@@ -1,7 +1,13 @@
+# secerts
+this cluster will not be hooked up to an external secrets provider.
+any secrets created by hand will be put into clusterstore namespace
+then shared via external-secrets--to stay inline with ideal approach
+
+if moving into another cluster, just swap out the clustoresecretstore!
+
 # extract secrets from other cluster
 ```sh
 # certs
-kubectl create namespace certificate
 kubectl --context tp2 get secret wildcarddotdev-production -n certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > tls.crt
 kubectl --context tp2 get secret wildcarddotdev-production -n certificate -o jsonpath='{.data.tls\.key}' | base64 -d > tls.key
 # grafana admin credentials
@@ -14,6 +20,7 @@ kubectl --context tp2 get secret grafana-admin-credentials -n observability -o j
 ```sh
 kubectl create namespace cilium-system
 kubectl create namespace clickhouse-operator
+kubectl create namespace external-secrets
 kubectl create namespace grafana-operator
 kubectl create namespace opentelemetry-operator
 kubectl create namespace local-path-storage
