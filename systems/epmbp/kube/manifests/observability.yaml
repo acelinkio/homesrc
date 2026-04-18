@@ -26,6 +26,10 @@ spec:
         key: clickhouse-passwords
         property: grafana
 ---
+# todo
+# fix grafana credentials
+# also improve secrets management to be no shared secrets
+# secretstore should be the one that is shared
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -37,7 +41,7 @@ spec:
     name: secretstore
     kind: ClusterSecretStore
   target:
-    name: grafana-admin-credentials
+    name: grafana-credentials
   data:
     - secretKey: GF_SECURITY_ADMIN_PASSWORD
       remoteRef:
@@ -216,12 +220,12 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       key: GF_SECURITY_ADMIN_USER
-                      name: grafana-admin-credentials
+                      name: grafana-credentials
                 - name: GF_SECURITY_ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
                       key: GF_SECURITY_ADMIN_PASSWORD
-                      name: grafana-admin-credentials
+                      name: grafana-credentials
               readinessProbe:
                 failureThreshold: 3
           volumes:
