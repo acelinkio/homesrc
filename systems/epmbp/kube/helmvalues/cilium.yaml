@@ -32,7 +32,7 @@ hubble:
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
-k8sServiceHost: "192.168.64.2" # colima default
+k8sServiceHost: "192.168.106.2" # colima default for krunkit
 k8sServicePort: 6443
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256

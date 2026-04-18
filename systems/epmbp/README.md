@@ -30,24 +30,44 @@ sudo tar Cxzvf / "${FILE}" opt/socket_vmnet
 # colima/kube
 Colima is being used to run containers locally.  We'll be using that and devspace to develop in.
 
-## deleting
-```sh
-#recreate lazy way
-colima delete --data -p ai 
-# my rerun nix config command
-apply_nix
-#trigger nix again
-launchctl kickstart -k gui/$(id -u)/org.nix-community.home.colima-ai
 
-# otherwise configure the flake
-# isService = false
-colima delete --data -p ai 
-# isService = true
-```
+## colima+nix conflict
+Nix wants to create a declarative configuration file
+Colima wants to enrich the configuration file as defaults change
+Including rndering out all configs
 
-## regenerating configurations
+we tried leveraging COLIMA_SAVE_CONFIG however there were issues
+* on colima restart would say it was resizing the disk from 20gb to 0gb
+* regularly would not return ip address
+
 ```
 # by default we changed COLIMA_SAVE_CONFIG=0 in our env configs because nix wants to own files and colima wants to make edits
 # temporarily enabling allows colima to regenerate files
 COLIMA_SAVE_CONFIG=1 colima start -p ai
 ```
+
+## creating
+we are going to manually copy our template as a base
+then let colima manage it
+```sh
+mkdir -p ~/.colima/localdev
+cat ~/.colima/mytemplate/colima.yaml > ~/.colima/localdev/colima.yaml
+colima start -p localdev
+```
+
+
+## deleting
+```sh
+colima delete --data -p localdev 
+# when it was managed by nix
+# my rerun nix config command
+# apply_nix
+# trigger nix again
+# launchctl kickstart -k gui/$(id -u)/org.nix-community.home.colima-localdev
+
+# otherwise configure the flake
+# isService = false
+# colima delete --data -p localdev
+# isService = true
+```
+
