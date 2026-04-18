@@ -1,5 +1,6 @@
 # hostctl profile: dev
-# apply with: hostctl add dev --from dev.hosts
-# list with:  hostctl list dev
-# toggle:     hostctl enable dev | hostctl disable dev
+# apply with:     sudo hostctl add dev --from dev.hosts
+# delete with:    sudo hostctl remove dev
+# toggle:         sudo hostctl enable dev | sudo hostctl disable dev
+# list with:      hostctl list dev
 192.168.106.200 grafana.dev.bitey.life mcp-k8s.dev.bitey.life
