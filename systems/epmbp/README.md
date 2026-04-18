@@ -16,3 +16,15 @@ sudo -H nix --extra-experimental-features 'nix-command flakes' run nix-darwin --
 
 # kube
 Colima is being used to run containers locally.  We'll be using that and devspace to develop in.
+
+```sh
+#recreate lazy way
+colima delete --data -p ai 
+#trigger nix again
+launchctl kickstart -k gui/$(id -u)/org.nix-community.home.colima-ai
+
+# otherwise configure the flake
+# isService = false
+colima delete --data -p ai 
+# isService = true
+```
