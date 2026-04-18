@@ -127,6 +127,7 @@
                 packsUnstable.devspace
                 packsUnstable.hurl
                 packsUnstable.gh
+                packsUnstable.lima-full
               ];
               home.file = {
                 # installed via brew
@@ -155,9 +156,13 @@
                   '';
                 };
               };
+              # home manager confiruations
+              # https://home-manager-options.extranix.com/?query=colima&release=master
               services.colima = {
                 enable = true;
                 package = packsUnstable.colima;
+                # $profile.settigns configurations
+                # https://github.com/abiosoft/colima/blob/main/embedded/defaults/colima.yaml
                 profiles = {
                   localdev = {
                     name = "localdev";
@@ -178,6 +183,35 @@
                           "--disable-cloud-controller"
                           "--disable-kube-proxy"
                           "--node-ip=192.168.64.2"
+                        ];
+                        port = 6443;
+                      };
+                      network = {
+                        address = true;
+                        mode = "shared";
+                      };
+                    };
+                  };
+                  ai = {
+                    name = "ai";
+                    isActive = false;
+                    isService = true;
+                    settings = {
+                      vmType = "krunkit";
+                      cpu = 4;
+                      memory = 8;
+                      disk = 80;
+                      runtime = "containerd";
+                      kubernetes = {
+                        enabled = true;
+                        version = "v1.35.3+k3s1";
+                        k3sArgs = [
+                          "--disable=coredns,flannel,local-storage,metrics-server,servicelb,traefik"
+                          "--flannel-backend='none'"
+                          "--disable-network-policy"
+                          "--disable-cloud-controller"
+                          "--disable-kube-proxy"
+                          "--node-ip=192.168.5.1"
                         ];
                         port = 6443;
                       };
