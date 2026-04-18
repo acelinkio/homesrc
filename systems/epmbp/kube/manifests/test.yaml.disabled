@@ -1,0 +1,56 @@
+# reference: https://github.com/medyagh/ai-playground-minikube/tree/main/macos
+# kubectl exec pod/uvkc-gpu -it -- /uvkc/mad_throughput
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: test
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vulkan-demo-cpu
+  namespace: test
+spec:
+  containers:
+  - name: vulkan-demo
+    image: quay.io/nirsof/vulkan-demo:v2
+    command: ["sh", "-c" , "trap 'exit 0' TERM; while true; do sleep 60 & wait; done"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vulkan-demo-gpu
+  namespace: test
+spec:
+  containers:
+  - name: vulkan-demo
+    image: quay.io/nirsof/vulkan-demo:v2
+    command: ["sh", "-c" , "trap 'exit 0' TERM; while true; do sleep 60 & wait; done"]
+    resources:
+      limits:
+        devic.es/dri: 1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: uvkc-cpu
+  namespace: test
+spec:
+  containers:
+  - name: uvkc
+    image: quay.io/nirsof/uvkc:v2
+    command: ["sh", "-c" , "trap 'exit 0' TERM; while true; do sleep 60 & wait; done"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: uvkc-gpu
+  namespace: test
+spec:
+  containers:
+  - name: uvkc
+    image: quay.io/nirsof/uvkc:v2
+    command: ["sh", "-c" , "trap 'exit 0' TERM; while true; do sleep 60 & wait; done"]
+    resources:
+      limits:
+        devic.es/dri: 1
