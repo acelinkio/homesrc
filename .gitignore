@@ -3,3 +3,5 @@ scratch/*
 *.crt
 *.key
 *.secret
+
+snippets/*.yaml
