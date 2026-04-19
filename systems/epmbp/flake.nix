@@ -77,14 +77,14 @@
                 # via this flake/nix
                 taps = [
                   "hcavarsan/kftray"
-                  "slp/krunkit"
+                  "slp/krun"
                 ];
                 # cli
                 brews = [
                   # no naitve nix package
                   "hcavarsan/kftray/kftui"
                   # colima krunkit requirement
-                  "slp/krunkit/krunkit"
+                  "slp/krun/krunkit"
                 ];
                 # gui
                 casks = [
