@@ -21,7 +21,7 @@ kubectl create namespace secretstore
 kubectl create secret tls wildcarddev --cert=tls.crt --key=tls.key -n secretstore
 # may consider adding external-secrets generator instead
 kubectl create secret generic clickhouse-passwords --from-literal=collector=$(uuidgen) --from-literal=grafana=$(uuidgen) -n secretstore
-kubectl create secret generic grafana-admin-credentials --from-file=GF_SECURITY_ADMIN_USER=grafana_admin.secret --from-file=GF_SECURITY_ADMIN_PASSWORD=grafana_password.secret -n secretstore
+kubectl create secret generic grafana-credentials --from-file=GF_SECURITY_ADMIN_USER=grafana_admin.secret --from-file=GF_SECURITY_ADMIN_PASSWORD=grafana_password.secret -n secretstore
 ```
 
 # finsihing kube setup

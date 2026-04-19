@@ -33,7 +33,7 @@ spec:
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: grafana-admin-credentials
+  name: grafana-credentials
   namespace: observability
 spec:
   refreshInterval: 1h
@@ -45,11 +45,11 @@ spec:
   data:
     - secretKey: GF_SECURITY_ADMIN_PASSWORD
       remoteRef:
-        key: grafana-admin-credentials
+        key: grafana-credentials
         property: GF_SECURITY_ADMIN_PASSWORD
     - secretKey: GF_SECURITY_ADMIN_USER
       remoteRef:
-        key: grafana-admin-credentials
+        key: grafana-credentials
         property: GF_SECURITY_ADMIN_USER
 ---
 apiVersion: clickhouse.altinity.com/v1
