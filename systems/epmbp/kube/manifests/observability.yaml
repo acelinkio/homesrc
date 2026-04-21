@@ -132,6 +132,15 @@ metadata:
   namespace: observability
 spec:
   mode: daemonset
+  volumeMounts:
+    - name: hostfs
+      mountPath: /hostfs
+      readOnly: true
+      mountPropagation: HostToContainer
+  volumes:
+    - name: hostfs
+      hostPath:
+        path: /
   env:
     - name: CLICKHOUSE_PASSWORD
       valueFrom:
@@ -146,6 +155,18 @@ spec:
             endpoint: 0.0.0.0:4317
           http:
             endpoint: 0.0.0.0:4318
+      hostmetrics:
+        root_path: /hostfs
+        collection_interval: 10s
+        scrapers:
+          cpu: {}
+          memory: {}
+          disk: {}
+          filesystem: {}
+          load: {}
+          network: {}
+          paging: {}
+          processes: {}
     processors:
       memory_limiter:
         check_interval: 1s
@@ -177,7 +198,7 @@ spec:
           processors: [memory_limiter]
           exporters: [clickhouse]
         metrics:
-          receivers: [otlp]
+          receivers: [otlp, hostmetrics]
           processors: [memory_limiter]
           exporters: [clickhouse]
         logs:
