@@ -14,7 +14,7 @@ releases:
   - name: cilium
     namespace: cilium-system
     chart: cilium/cilium
-    version: "1.19.2"
+    version: "1.19.4"
     values:
       - ./helmvalues/cilium.yaml
 
@@ -35,7 +35,7 @@ releases:
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: "2.3.0"
+    version: "2.5.0"
     values:
       - ./helmvalues/external-secrets.yaml
 
@@ -49,21 +49,21 @@ releases:
   - name: envoy-gateway
     namespace: envoy-gateway
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: "v1.7.1"
+    version: "v1.8.0"
     values:
       - ./helmvalues/envoy-gateway.yaml
 
   - name: clickhouse
     namespace: clickhouse-operator
     chart: clickhouse/altinity-clickhouse-operator
-    version: "0.26.2"
+    version: "0.27.0"
     values:
       - ./helmvalues/clickhouse-operator.yaml
 
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
     chart: opentelemetry-operator/opentelemetry-operator
-    version: "0.109.0"
+    version: "0.113.1"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
 
@@ -77,6 +77,6 @@ releases:
   - name: cnpg-system
     namespace: cnpg-system
     chart: oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg
-    version: "0.28.0"
+    version: "0.28.2"
     values:
       - ./helmvalues/cnpg-system.yaml
