@@ -13,6 +13,93 @@ spec:
   infrastructure:
     annotations:
       io.cilium/lb-ipam-ips: 192.168.106.200
+  gatewayClassName: envoygateway
+  listeners:
+    - protocol: HTTP
+      port: 80
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - protocol: HTTPS
+      port: 443
+      name: https
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcarddev
+            namespace: certificate
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal-otel
+  namespace: gateway
+spec:
+  infrastructure:
+    annotations:
+      io.cilium/lb-ipam-ips: 192.168.106.201
+  gatewayClassName: envoygateway-otel
+  listeners:
+    - protocol: HTTP
+      port: 80
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - protocol: HTTPS
+      port: 443
+      name: https
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcarddev
+            namespace: certificate
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external
+  namespace: gateway
+spec:
+  infrastructure:
+    annotations:
+      io.cilium/lb-ipam-ips: 192.168.106.202
+  gatewayClassName: envoygateway
+  listeners:
+    - protocol: HTTP
+      port: 80
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - protocol: HTTPS
+      port: 443
+      name: https
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcarddev
+            namespace: certificate
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external-otel
+  namespace: gateway
+spec:
+  infrastructure:
+    annotations:
+      io.cilium/lb-ipam-ips: 192.168.106.203
   gatewayClassName: envoygateway-otel
   listeners:
     - protocol: HTTP
@@ -41,6 +128,9 @@ metadata:
 spec:
   parentRefs:
     - name: internal
+      namespace: gateway
+      sectionName: http
+    - name: internal-otel
       namespace: gateway
       sectionName: http
   rules:
