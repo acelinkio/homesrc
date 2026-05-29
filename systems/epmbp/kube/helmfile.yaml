@@ -63,14 +63,14 @@ releases:
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
     chart: opentelemetry-operator/opentelemetry-operator
-    version: "0.113.1"
+    version: "0.114.1"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
 
   - name: grafana-operator
     namespace: grafana-operator
     chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
-    version: "5.22.2"
+    version: "5.23.0"
     values:
       - ./helmvalues/grafana-operator.yaml
 
