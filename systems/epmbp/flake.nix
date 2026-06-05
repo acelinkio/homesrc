@@ -71,6 +71,7 @@
                   # "zap" removes formulae/casks not listed below
                   # "uninstall" removes but keeps deps; "none" to skip
                   cleanup = "zap";
+                  extraFlags = [ "--force" ];
                 };
                 # git-credential-manager install is done manually via brew
                 # however installation fails because the git config is managed
@@ -173,13 +174,17 @@
                   package = (
                     packsUnstable.colima.overrideAttrs (o: ({
                       doCheck = false;
-                      patches = [
-                        (pkgs.fetchpatch2 {
-                          name = "mybuild";
-                          url = "https://github.com/abiosoft/colima/pull/1560.patch";
-                          hash = "sha256-gbFDD5ojGLTGgdGPMiTsR+ZpoO6NHAcc9ydBuwKqfo4=";
-                        })
-                      ];
+                      version = "0.10.3";
+                      src = pkgs.fetchFromGitHub {
+                        owner = "abiosoft";
+                        repo = "colima";
+                        rev = "00f6c297e92a82c04a4ab507db0a61435650d7e8";
+                        hash = "sha256-NbGVWz4W3yIHSRN1O6raV0blzf/7y41529lgowtRSbQ=";
+                      };
+                      postPatch = ''
+                        echo "v0.10.3" > .git-revision
+                      '';
+                      vendorHash = "sha256-j1RuG3CTGfVNfT/v+C2pZgb58c9cxa2op3LA/F5rNWo=";
                     }))
                   );
                   # $profile.settigns configurations
