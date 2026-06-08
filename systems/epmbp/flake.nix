@@ -137,7 +137,6 @@
                   packsUnstable.devspace
                   packsUnstable.hurl
                   packsUnstable.gh
-                  packsUnstable.lima-full
                 ];
                 home.file = {
                   # installed via brew
@@ -172,28 +171,23 @@
                   enable = true;
                   # https://github.com/abiosoft/colima/pull/1560
                   package = (
-                    packsUnstable.colima.overrideAttrs (o: ({
-                      doCheck = false;
-                      patches = [
-                        (pkgs.fetchpatch2 {
-                          name = "mybuild";
-                          url = "https://github.com/abiosoft/colima/pull/1560.patch";
-                          hash = "sha256-gbFDD5ojGLTGgdGPMiTsR+ZpoO6NHAcc9ydBuwKqfo4=";
-                        })
-                      ];
-                      # version = "0.10.3";
-                      # src = pkgs.fetchFromGitHub {
-                      #   owner = "abiosoft";
-                      #   repo = "colima";
-                      #   rev = "00f6c297e92a82c04a4ab507db0a61435650d7e8";
-                      #   hash = "sha256-NbGVWz4W3yIHSRN1O6raV0blzf/7y41529lgowtRSbQ=";
-                      # };
-                      # postPatch = ''
-                      #   echo "v0.10.3" > .git-revision
-                      # '';
-                      # vendorHash = "sha256-j1RuG3CTGfVNfT/v+C2pZgb58c9cxa2op3LA/F5rNWo=";
-                    }))
-                  );
+                    packsUnstable.colima.override (prev: {
+                      # Make krunkit "unavailable" on this platform so colima's wrapper drops it.
+                      # colima then resolves `krunkit` from the inherited $PATH (your brew install).
+                      krunkit = prev.krunkit.overrideAttrs (old: {
+                        meta = old.meta // { platforms = [ ]; };
+                      });
+                    })
+                  ).overrideAttrs (o: {
+                    doCheck = false;
+                    patches = [
+                      (pkgs.fetchpatch2 {
+                        name = "mybuild";
+                        url = "https://github.com/abiosoft/colima/pull/1560.patch";
+                        hash = "sha256-gbFDD5ojGLTGgdGPMiTsR+ZpoO6NHAcc9ydBuwKqfo4=";
+                      })
+                    ];
+                  });
                   # $profile.settigns configurations
                   # https://github.com/abiosoft/colima/blob/main/embedded/defaults/colima.yaml
                   profiles = {
