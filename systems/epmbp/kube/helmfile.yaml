@@ -14,69 +14,69 @@ releases:
   - name: cilium
     namespace: cilium-system
     chart: cilium/cilium
-    version: "1.19.4"
+    version: "1.19.6"
     values:
       - ./helmvalues/cilium.yaml
 
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
-    version: "1.45.2"
+    version: "1.46.1"
     values:
       - ./helmvalues/coredns.yaml
 
   - name: metrics-server
     namespace: kube-system
     chart: metrics-server/metrics-server
-    version: "3.13.0"
+    version: "3.13.1"
     values:
       - ./helmvalues/metrics-server.yaml
 
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: "2.5.0"
+    version: "2.8.0"
     values:
       - ./helmvalues/external-secrets.yaml
 
   - name: local-path-provisioner
     namespace: local-path-storage
     chart: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
-    version: "0.0.35"
+    version: "0.0.36"
     values:
       - ./helmvalues/local-path-provisioner.yaml
 
   - name: envoy-gateway
     namespace: envoy-gateway
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: "v1.8.0"
+    version: "v1.8.2"
     values:
       - ./helmvalues/envoy-gateway.yaml
 
   - name: clickhouse
     namespace: clickhouse-operator
     chart: clickhouse/altinity-clickhouse-operator
-    version: "0.27.0"
+    version: "0.27.1"
     values:
       - ./helmvalues/clickhouse-operator.yaml
 
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
     chart: opentelemetry-operator/opentelemetry-operator
-    version: "0.114.1"
+    version: "0.120.0"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
 
   - name: grafana-operator
     namespace: grafana-operator
     chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
-    version: "5.23.0"
+    version: "5.24.0"
     values:
       - ./helmvalues/grafana-operator.yaml
 
   - name: cnpg-system
     namespace: cnpg-system
     chart: oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg
-    version: "0.28.2"
+    version: "0.29.0"
     values:
       - ./helmvalues/cnpg-system.yaml
