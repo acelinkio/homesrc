@@ -78,14 +78,14 @@
                 # via this flake/nix
                 taps = [
                   "hcavarsan/kftray"
-                  "slp/krun"
+                  "libkrun/krun"
                 ];
                 # cli
                 brews = [
                   # no naitve nix package
                   "hcavarsan/kftray/kftui"
                   # colima krunkit requirement
-                  "slp/krun/krunkit"
+                  "libkrun/krun/krunkit"
                 ];
                 # gui
                 casks = [
@@ -178,16 +178,7 @@
                         meta = old.meta // { platforms = [ ]; };
                       });
                     })
-                  ).overrideAttrs (o: {
-                    doCheck = false;
-                    patches = [
-                      (pkgs.fetchpatch2 {
-                        name = "mybuild";
-                        url = "https://github.com/abiosoft/colima/pull/1560.patch";
-                        hash = "sha256-gbFDD5ojGLTGgdGPMiTsR+ZpoO6NHAcc9ydBuwKqfo4=";
-                      })
-                    ];
-                  });
+                  );
                   # $profile.settigns configurations
                   # https://github.com/abiosoft/colima/blob/main/embedded/defaults/colima.yaml
                   profiles = {
