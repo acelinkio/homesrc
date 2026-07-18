@@ -1,14 +1,13 @@
 {
   description = "epmbp";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    # must match nixpkgs release; 26.05 has `homebrew.taps.*.trusted`
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager-unstable.url = "github:nix-community/home-manager/master";
-    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
@@ -18,7 +17,6 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      home-manager-unstable,
     }:
     let
       username = "ep";
@@ -77,8 +75,14 @@
                 # however installation fails because the git config is managed
                 # via this flake/nix
                 taps = [
-                  "hcavarsan/kftray"
-                  "libkrun/krun"
+                  {
+                    name = "hcavarsan/kftray";
+                    trusted = true;
+                  }
+                  {
+                    name = "libkrun/krun";
+                    trusted = true;
+                  }
                 ];
                 # cli
                 brews = [
@@ -112,7 +116,6 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.${username} = {
-                imports = [ (inputs.home-manager-unstable + "/modules/services/colima.nix") ];
                 home.username = username;
                 home.homeDirectory = "/Users/${username}";
                 home.stateVersion = "${stateversion_homemanager}";
@@ -166,7 +169,7 @@
                   };
                 };
                 # home manager confiruations
-                # https://home-manager-options.extranix.com/?query=colima&release=master
+                # https://home-manager-options.extranix.com/?query=colima&release=26.05
                 services.colima = {
                   enable = true;
                   # https://github.com/abiosoft/colima/pull/1560
@@ -189,12 +192,12 @@
                       settings = {
                         vmType = "krunkit";
                         cpu = 4;
-                        memory = 12;
+                        memory = 16;
                         disk = 80;
                         runtime = "containerd";
                         kubernetes = {
                           enabled = true;
-                          version = "v1.35.3+k3s1";
+                          version = "v1.36.2+k3s1";
                           k3sArgs = [
                             "--disable=coredns,flannel,local-storage,metrics-server,servicelb,traefik"
                             "--flannel-backend='none'"
