@@ -126,7 +126,7 @@
                   # COLIMA_SAVE_CONFIG = "0";
                 };
                 home.packages = [
-                  packs.nixfmt-rfc-style # nix formatter
+                  packs.nixfmt # nix formatter
                   packs.nil # nix language server
                   packs.kubectx # kubectx kubens
                   packs.k9s
@@ -262,6 +262,7 @@
                     cd_nix = "cd ~/source/github.com/acelinkio/homesrc/systems/epmbp";
                     apply_nix = "sudo darwin-rebuild switch --flake ~/source/github.com/acelinkio/homesrc/systems/epmbp";
                     op_login = "eval $(op signin)";
+                    g47 = "open /Users/ep/source/installs/godot_4.7.1/Godot.app";
                   };
                 };
                 programs.starship = {
