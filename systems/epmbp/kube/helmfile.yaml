@@ -14,21 +14,21 @@ releases:
   - name: cilium
     namespace: cilium-system
     chart: cilium/cilium
-    version: "1.19.6"
+    version: "1.20.1"
     values:
       - ./helmvalues/cilium.yaml
 
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
-    version: "1.46.1"
+    version: "1.47.1"
     values:
       - ./helmvalues/coredns.yaml
 
   - name: metrics-server
     namespace: kube-system
     chart: metrics-server/metrics-server
-    version: "3.13.1"
+    version: "3.14.0"
     values:
       - ./helmvalues/metrics-server.yaml
 
