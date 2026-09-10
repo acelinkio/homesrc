@@ -1,6 +1,4 @@
 repositories:
-  - name: cilium
-    url: https://helm.cilium.io
   - name: coredns
     url: https://coredns.github.io/helm
   - name: metrics-server
@@ -13,7 +11,7 @@ repositories:
 releases:
   - name: cilium
     namespace: cilium-system
-    chart: cilium/cilium
+    chart: oci://quay.io/cilium/charts/cilium
     version: "1.20.1"
     values:
       - ./helmvalues/cilium.yaml
