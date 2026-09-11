@@ -1,13 +1,3 @@
-repositories:
-  - name: coredns
-    url: https://coredns.github.io/helm
-  - name: metrics-server
-    url: https://kubernetes-sigs.github.io/metrics-server
-  - name: clickhouse
-    url: https://helm.altinity.com
-  - name: opentelemetry-operator
-    url: https://open-telemetry.github.io/opentelemetry-helm-charts
-
 releases:
   - name: cilium
     namespace: cilium-system
@@ -18,14 +8,16 @@ releases:
 
   - name: coredns
     namespace: kube-system
-    chart: coredns/coredns
+    chart: oci://ghcr.io/coredns/charts/coredns
     version: "1.47.1"
     values:
       - ./helmvalues/coredns.yaml
 
   - name: metrics-server
     namespace: kube-system
-    chart: metrics-server/metrics-server
+    # using mirror
+    # # https://github.com/home-operations/charts-mirror/issues/8
+    chart: oci://ghcr.io/home-operations/charts-mirror/metrics-server
     version: "3.14.0"
     values:
       - ./helmvalues/metrics-server.yaml
@@ -53,14 +45,14 @@ releases:
 
   - name: clickhouse
     namespace: clickhouse-operator
-    chart: clickhouse/altinity-clickhouse-operator
-    version: "0.27.1"
+    chart: oci://ghcr.io/altinity/clickhouse-operator-helm-chart/altinity-clickhouse-operator
+    version: "0.27.3"
     values:
       - ./helmvalues/clickhouse-operator.yaml
 
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
-    chart: opentelemetry-operator/opentelemetry-operator
+    chart: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts/opentelemetry-operator
     version: "0.120.0"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
