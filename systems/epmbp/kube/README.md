@@ -15,6 +15,14 @@ kubectl --context tp2 get secret grafana-admin-credentials -n observability -o j
 kubectl --context tp2 get secret grafana-admin-credentials -n observability -o jsonpath='{.data.GF_SECURITY_ADMIN_USER}' | base64 -d > grafana_admin.secret
 ```
 
+## alternative certificate
+```sh
+openssl req -x509 -nodes -newkey rsa:2048 -days 30 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=*.dev.bitey.life" \
+  -addext "subjectAltName=DNS:*.dev.bitey.life,DNS:dev.bitey.life"
+```
+
 # importing these imperative secrets
 ```sh
 kubectl create namespace secretstore
