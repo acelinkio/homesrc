@@ -25,21 +25,21 @@ releases:
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: "2.8.0"
+    version: "2.10.0"
     values:
       - ./helmvalues/external-secrets.yaml
 
   - name: local-path-provisioner
     namespace: local-path-storage
     chart: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
-    version: "0.0.36"
+    version: "0.0.37"
     values:
       - ./helmvalues/local-path-provisioner.yaml
 
   - name: envoy-gateway
     namespace: envoy-gateway
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: "v1.8.2"
+    version: "v1.9.1"
     values:
       - ./helmvalues/envoy-gateway.yaml
 
@@ -53,14 +53,14 @@ releases:
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
     chart: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts/opentelemetry-operator
-    version: "0.120.0"
+    version: "0.122.1"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
 
   - name: grafana-operator
     namespace: grafana-operator
     chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
-    version: "5.24.0"
+    version: "5.25.0"
     values:
       - ./helmvalues/grafana-operator.yaml
 
