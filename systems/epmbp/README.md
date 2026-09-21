@@ -58,7 +58,7 @@ colima start -p localdev
 
 ## deleting
 ```sh
-colima delete --data -p localdev 
+colima delete --data -p localdev
 # when it was managed by nix
 # my rerun nix config command
 # apply_nix
