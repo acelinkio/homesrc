@@ -199,7 +199,7 @@
                           enabled = true;
                           version = "v1.37.0+k3s1";
                           k3sArgs = [
-                            "--disable=coredns,flannel,local-storage,metrics-server,servicelb,traefik"
+                            "--disable=coredns,flannel,local-storage,metrics-server,servicelb,traefik,gateway-api-crd"
                             "--flannel-backend='none'"
                             "--disable-network-policy"
                             "--disable-cloud-controller"
