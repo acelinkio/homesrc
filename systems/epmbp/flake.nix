@@ -96,6 +96,7 @@
                   "1password"
                   "claude-code"
                   "discord"
+                  "drawio"
                   "firefox"
                   "font-monaspice-nerd-font"
                   "freelens"
@@ -140,6 +141,7 @@
                   packsUnstable.devspace
                   packsUnstable.hurl
                   packsUnstable.gh
+                  packsUnstable.renovate
                 ];
                 home.file = {
                   # installed via brew
