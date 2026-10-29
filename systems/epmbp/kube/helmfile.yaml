@@ -39,7 +39,7 @@ releases:
   - name: envoy-gateway
     namespace: envoy-gateway
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: "v1.9.2"
+    version: "v1.9.3"
     values:
       - ./helmvalues/envoy-gateway.yaml
 
@@ -53,7 +53,7 @@ releases:
   - name: opentelemetry-operator
     namespace: opentelemetry-operator
     chart: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts/opentelemetry-operator
-    version: "0.126.2"
+    version: "0.128.0"
     values:
       - ./helmvalues/opentelemetry-operator.yaml
 
